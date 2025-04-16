@@ -1,0 +1,5 @@
+.incdec__buttons {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
+}
