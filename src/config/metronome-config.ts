@@ -8,14 +8,12 @@ export interface Action {
   data: Partial<Config>;
 }
 
-export const initial = {
-  MIN_BEAT_COUNT: 1,
-  MAX_BEAT_COUNT: 16,
-  MIN_TEMPO: 1,
-  MAX_TEMPO: 300,
-};
+export const MIN_BEAT_COUNT =  1;
+export const MAX_BEAT_COUNT = 16;
+export const MIN_TEMPO = 1;
+export const MAX_TEMPO = 300;
 
-export function metronomeReducer(state: Config, action: Action) {
+export function reducer(state: Config, action: Action) {
   const newState = { ...state };
 
   switch (action.type) {
@@ -23,8 +21,8 @@ export function metronomeReducer(state: Config, action: Action) {
       let newTempo = action.data.tempo;
       if (newTempo === undefined) return state;
 
-      newTempo = Math.min(newTempo, initial.MAX_TEMPO);
-      newTempo = Math.max(newTempo, initial.MIN_TEMPO);
+      newTempo = Math.min(newTempo, MAX_TEMPO);
+      newTempo = Math.max(newTempo, MIN_TEMPO);
       newState.tempo = newTempo;
       break;
     }
@@ -33,8 +31,8 @@ export function metronomeReducer(state: Config, action: Action) {
       let beatCount = action.data.beatCount;
       if (beatCount === undefined) return state;
 
-      beatCount = Math.min(beatCount, initial.MAX_BEAT_COUNT);
-      beatCount = Math.max(beatCount, initial.MIN_BEAT_COUNT);
+      beatCount = Math.min(beatCount, MAX_BEAT_COUNT);
+      beatCount = Math.max(beatCount, MIN_BEAT_COUNT);
       newState.beatCount = beatCount;
       break;
     }

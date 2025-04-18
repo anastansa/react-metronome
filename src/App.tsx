@@ -1,14 +1,14 @@
 import { useCallback, useReducer, useState } from 'react';
-import PlayStopButton from '@/components/PlayStopButton';
-import Metronome from '@/components/Metronome';
-import Tempo from '@/components/Tempo';
-import { metronomeReducer } from '@/config/metronome-config';
+import PlayStopButton from './components/PlayStopButton';
+import Metronome from './components/Metronome';
+import Tempo from './components/Tempo';
+import { reducer } from './config/metronome-config';
 import './App.css';
 
 export default function Home() {
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const [config, dispatch] = useReducer(metronomeReducer, {
+  const [config, dispatch] = useReducer(reducer, {
     beatCount: 4,
     tempo: 100,
   });
