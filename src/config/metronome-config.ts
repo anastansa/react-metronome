@@ -1,12 +1,4 @@
-export interface Config {
-  beatCount: number;
-  tempo: number;
-}
-
-export interface Action {
-  type: 'setTempo' | 'setBeatCount';
-  data: Partial<Config>;
-}
+import { Action, Config } from "../types/metronome";
 
 export const MIN_BEAT_COUNT =  1;
 export const MAX_BEAT_COUNT = 16;

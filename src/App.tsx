@@ -20,7 +20,7 @@ export default function Home() {
 
   return (
     <>
-      <Metronome isPlaying={isPlaying} />
+      <Metronome isPlaying={isPlaying} config={config} />
       <PlayStopButton isPlaying={isPlaying} handlePlaying={handlePlaying} />
       <Tempo
         tempo={config.tempo}
