@@ -20,20 +20,22 @@ export default function Home() {
 
   return (
     <>
-      <Metronome isPlaying={isPlaying} config={config} />
-      <PlayStopButton isPlaying={isPlaying} handlePlaying={handlePlaying} />
-      <Tempo
-        tempo={config.tempo}
-        onTempoChanged={(tempo: number) =>
-          dispatch({ type: 'setTempo', data: { tempo } })
-        }
-      />
-      <BeatCount
-        beatCount={config.beatCount}
-        onBeatCountChanged={(beatCount: number) =>
-          dispatch({ type: 'setBeatCount', data: { beatCount } })
-        }
-      />
+      <div className="container">
+        <Metronome isPlaying={isPlaying} config={config} />
+        <PlayStopButton isPlaying={isPlaying} handlePlaying={handlePlaying} />
+        <Tempo
+          tempo={config.tempo}
+          onTempoChanged={(tempo: number) =>
+            dispatch({ type: 'setTempo', data: { tempo } })
+          }
+        />
+        <BeatCount
+          beatCount={config.beatCount}
+          onBeatCountChanged={(beatCount: number) =>
+            dispatch({ type: 'setBeatCount', data: { beatCount } })
+          }
+        />
+      </div>
     </>
   );
 }

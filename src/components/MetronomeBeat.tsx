@@ -1,4 +1,5 @@
 import { BeatLevel } from '../types/metronome';
+import './Metronome.css';
 
 interface Props {
   beatLevel: BeatLevel;
@@ -21,19 +22,14 @@ export default function MetronomeBeat({
   return (
     <div
       className={`${
-        active ? 'bg-cyan-400' : 'bg-transparent'
-      } border border-cyan-600 rounded py-2 px-1 md:px-2 md:py-3 
-      flex flex-col gap-1 items-center justify-end 
-      w-[45px] md:w-[80px] h-[60px] md:h-[80px]
-      cursor-pointer`}
+        active ? 'active-beat-container' : 'normal-beat-container'
+      } beat-container`}
       onClick={clickHandler}
     >
       {Array.from(Array(beatLevel + 1).keys()).map((el) => (
         <span
           key={el}
-          className={`${
-            active ? 'bg-gray-50' : 'bg-cyan-600'
-          } rounded w-full h-3 block`}
+          className={`${active ? 'active-beat' : 'normal-beat'} beat `}
         ></span>
       ))}
     </div>

@@ -3,6 +3,7 @@ import { BeatLevel, Config } from '../types/metronome';
 import useStepMetronome from '../hooks/use-step-metronome';
 import usePlayClickSound from '../hooks/use-play-click-sound';
 import MetronomeBeat from './MetronomeBeat';
+import './Metronome.css';
 
 interface Props {
   isPlaying: boolean;
@@ -57,11 +58,11 @@ export default function Metronome({ isPlaying, config }: Props) {
   };
 
   return (
-    <div className="">
-      {beats.map((b, index) => (
+    <div className="metronome">
+      {beats.map((beat, index) => (
         <MetronomeBeat
           key={index}
-          beatLevel={b}
+          beatLevel={beat}
           onBeatLevelChanged={(level: number) => beatLevelChanged(index, level)}
           active={activeBeat == index}
         />
