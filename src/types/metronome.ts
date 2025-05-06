@@ -8,7 +8,7 @@ export interface Action {
 	data: Partial<Config>;
 }
 
-export enum BeatType {
+export enum BeatLevel {
 	WEAK,
 	NORMAL,
 	STRONG,
