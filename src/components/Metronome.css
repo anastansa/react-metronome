@@ -32,8 +32,18 @@
 }
 
 .normal-beat {
-	background-color: blue;
+	background-color: lightblue;
 	opacity: 0.3;
+}
+
+.weak-beat {
+	background-color: transparent;
+	border: 3px solid lightblue;
+}
+
+.strong-beat {
+	background-color: lightblue;
+	opacity: 1;
 }
 
 .beat {
@@ -41,4 +51,5 @@
 	width: 30px;
 	border-radius: 50%;
 	height: 30px;
+	box-sizing: border-box;
 }
