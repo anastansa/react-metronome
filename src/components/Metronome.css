@@ -1,45 +1,44 @@
-.active-beat-container {
+/* .active-beat-container {
   background-color: blue;
-}
+} */
 
 .normal-beat-container {
-  background-color: transparent;
+	background-color: transparent;
 }
 
 .beat-container {
-  padding: 20px 10px;
-  border: 1px solid white;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  justify-content: end;
-  align-items: center;
-  cursor: pointer;
-  width: 45px;
-  /* height: 60px; */
+	padding: 10px 10px;
+	border: 1px solid white;
+	border-radius: 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	justify-content: end;
+	align-items: center;
+	cursor: pointer;
+	width: 45px;
 }
 
 .metronome {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 50px;
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+	margin-bottom: 50px;
 }
 
 .active-beat {
-  background-color: grey;
-  opacity: 1;
+	background-color: blue;
+	opacity: 1;
 }
 
 .normal-beat {
-  background-color: green;
-  opacity: 0.3;
+	background-color: blue;
+	opacity: 0.3;
 }
 
 .beat {
-  display: block;
-  width: 30px;
-  border-radius: 50%;
-  height: 30px;
+	display: block;
+	width: 30px;
+	border-radius: 50%;
+	height: 30px;
 }
