@@ -1,7 +1,3 @@
-/* .active-beat-container {
-  background-color: blue;
-} */
-
 .normal-beat-container {
 	background-color: transparent;
 }
@@ -32,17 +28,17 @@
 }
 
 .normal-beat {
-	background-color: lightblue;
+	background-color: blue;
 	opacity: 0.3;
 }
 
 .weak-beat {
 	background-color: transparent;
-	border: 3px solid lightblue;
+	border: 3px solid blue;
 }
 
 .strong-beat {
-	background-color: lightblue;
+	background-color: blue;
 	opacity: 1;
 }
 
