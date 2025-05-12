@@ -7,68 +7,82 @@ import { reducer } from './config/metronome-config';
 import './App.css';
 
 export default function Home() {
-	const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
 
-	const [config, dispatch] = useReducer(reducer, {
-		beatCount: 4,
-		tempo: 100,
-	});
+  const [config, dispatch] = useReducer(reducer, {
+    beatCount: 4,
+    tempo: 100,
+  });
 
-	const handlePlaying = useCallback(() => {
-		setIsPlaying(!isPlaying);
-	}, [isPlaying]);
+  const handlePlaying = useCallback(() => {
+    setIsPlaying(!isPlaying);
+  }, [isPlaying]);
 
-	useEffect(() => {
-		const canvas = document.getElementById("myCanvas")
-		const ctx = canvas?.getContext("2d");
-		let x = 0;
-		let y = canvas?.height - 50;
-		const dx = 2;
+  useEffect(() => {
+    const canvas = document.getElementById('myCanvas') as HTMLCanvasElement;
+    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
 
-		function drawBall() {
-			ctx.beginPath();
-			ctx.arc(x, y, 10, 0, Math.PI * 2);
-			ctx.fillStyle = "#0095DD";
-			ctx.fill();
-			ctx.closePath();
-		}
+    let x = canvas.width / 2; // Начальная позиция шарика
+    const y = canvas.height / 2;
+    const radius = 20; // Радиус шарика
+    const speed = 2; // Скорость движения шарика
+    let direction = 1; // 1 - в право, -1 - влево
 
-		function draw() {
-			ctx?.clearRect(0, 0, canvas.width, canvas.height);
-			drawBall();
-			x += dx;
-		}
+    // Линия под предметом
+    ctx.beginPath();
+    ctx.moveTo(canvas.width / 2, canvas.height / 2);
+    ctx.lineTo(canvas.width, canvas.height / 2);
+    ctx.strokeStyle = 'red';
+    ctx.stroke();
 
-		function startGame() {
-			setInterval(draw, 10);
-		}
+    function drawBall() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // Очистка canvas
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, Math.PI * 2);
+      ctx.fillStyle = 'blue';
+      ctx.fill();
+      ctx.closePath();
 
-		document?.getElementById("runButton")?.addEventListener("click", function () {
-			startGame();
-		});
-	});
+      // Изменение позиции шарика
+      x += speed * direction;
 
-	return (
-		<>
-			<canvas id="myCanvas" width="480" height="320"></canvas>
-			<button id="runButton">Start game</button>
+      // Проверка границ
+      if (x + radius > canvas.width || x - radius < 0) {
+        direction *= -1; // Изменение направления при столкновении с границей
+      }
+    }
 
-			<div className="container">
-				<Metronome isPlaying={isPlaying} config={config} />
-				<PlayStopButton isPlaying={isPlaying} handlePlaying={handlePlaying} />
-				<Tempo
-					tempo={config.tempo}
-					onTempoChanged={(tempo: number) =>
-						dispatch({ type: 'setTempo', data: { tempo } })
-					}
-				/>
-				<BeatCount
-					beatCount={config.beatCount}
-					onBeatCountChanged={(beatCount: number) =>
-						dispatch({ type: 'setBeatCount', data: { beatCount } })
-					}
-				/>
-			</div>
-		</>
-	);
+    function animate() {
+      drawBall();
+      requestAnimationFrame(animate); // Обновление анимации
+    }
+
+    animate(); // Запуск анимации
+  });
+
+  const style = {
+    border: '1px solid black',
+  };
+
+  return (
+    <>
+      <div className="container">
+        <Metronome isPlaying={isPlaying} config={config} />
+        <canvas id="myCanvas" width="480" height="80" style={style} />
+        <PlayStopButton isPlaying={isPlaying} handlePlaying={handlePlaying} />
+        <Tempo
+          tempo={config.tempo}
+          onTempoChanged={(tempo: number) =>
+            dispatch({ type: 'setTempo', data: { tempo } })
+          }
+        />
+        <BeatCount
+          beatCount={config.beatCount}
+          onBeatCountChanged={(beatCount: number) =>
+            dispatch({ type: 'setBeatCount', data: { beatCount } })
+          }
+        />
+      </div>
+    </>
+  );
 }
