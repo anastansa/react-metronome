@@ -27,15 +27,15 @@ export default function MetronomeBeat({
       onClick={clickHandler}
     >
       {beatLevel === BeatLevel.WEAK && (
-        <span className={`${active ?? 'active-beat'} beat weak-beat`} />
+        <span className={` beat weak-beat ${active ?? 'active-beat'}`} />
       )}
 
       {beatLevel === BeatLevel.NORMAL && (
-        <span className={`${active ?? 'active-beat'} beat normal-beat`} />
+        <span className={` beat normal-beat ${active ?? 'active-beat'}`} />
       )}
 
       {beatLevel === BeatLevel.STRONG && (
-        <span className={`${active ?? 'active-beat'} beat strong-beat`} />
+        <span className={` beat strong-beat ${active ?? 'active-beat'}`} />
       )}
     </div>
   );

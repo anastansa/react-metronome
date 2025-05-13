@@ -1,51 +1,55 @@
-.normal-beat-container {
-	background-color: transparent;
+.beat-container {
+  padding: 10px 10px;
+  border: 1px solid white;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: end;
+  align-items: center;
+  cursor: pointer;
+  width: 45px;
 }
 
-.beat-container {
-	padding: 10px 10px;
-	border: 1px solid white;
-	border-radius: 20px;
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
-	justify-content: end;
-	align-items: center;
-	cursor: pointer;
-	width: 45px;
+.normal-beat-container {
+  background-color: transparent;
+}
+
+.active-beat-container {
+  border-color: blue;
 }
 
 .metronome {
-	display: flex;
-	justify-content: center;
-	gap: 10px;
-	margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 .active-beat {
-	background-color: blue;
-	opacity: 1;
+  background-color: orange !important;
+  opacity: 1;
 }
 
 .normal-beat {
-	background-color: blue;
-	opacity: 0.3;
+  background-color: blue;
+  opacity: 0.3;
 }
 
 .weak-beat {
-	background-color: transparent;
-	border: 3px solid blue;
+  background-color: transparent;
+  border: 3px solid blue;
 }
 
 .strong-beat {
-	background-color: blue;
-	opacity: 1;
+  background-color: blue;
+  opacity: 1;
 }
 
 .beat {
-	display: block;
-	width: 30px;
-	border-radius: 50%;
-	height: 30px;
-	box-sizing: border-box;
+  display: block;
+  width: 30px;
+  border-radius: 50%;
+  height: 30px;
+  box-sizing: border-box;
 }
