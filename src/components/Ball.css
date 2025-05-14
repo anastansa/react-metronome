@@ -1,0 +1,19 @@
+.canvas__container {
+  position: relative;
+  width: 400px;
+  height: 80px;
+}
+
+.canvas__ball {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.canvas__line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}

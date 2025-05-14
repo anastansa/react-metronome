@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import './Ball.css';
 
 interface Props {
   isPlaying: boolean;
@@ -6,60 +7,86 @@ interface Props {
 
 export default function PlayStopButton({ isPlaying }: Props) {
   useEffect(() => {
-    const canvas = document.getElementById('myCanvas') as HTMLCanvasElement;
-    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+    const canvasBall = document.getElementById(
+      'canvasBall'
+    ) as HTMLCanvasElement;
+    const ctxBall = canvasBall.getContext('2d') as CanvasRenderingContext2D;
+
+    const canvasLine = document.getElementById(
+      'canvasLine'
+    ) as HTMLCanvasElement;
+    const ctxLine = canvasLine.getContext('2d') as CanvasRenderingContext2D;
 
     let x = 20;
-    const y = canvas.height / 2;
+    const y = canvasBall.height / 2;
     const radius = 20;
     const speed = 2;
     let direction = 1;
+    let animationId;
 
-    function drawCanvas() {
-      ctx.beginPath();
-      ctx.moveTo(0, canvas.height / 2);
-      ctx.lineTo(canvas.width, canvas.height / 2);
-      ctx.strokeStyle = '#474747';
-      ctx.stroke();
-
-      ctx.beginPath();
-      ctx.arc(x, y, radius, 0, Math.PI * 2);
-      ctx.fillStyle = 'blue';
-      ctx.fill();
-      ctx.closePath();
+    function drawLine() {
+      ctxLine.beginPath();
+      ctxLine.moveTo(0, canvasLine.height / 2);
+      ctxLine.lineTo(canvasLine.width, canvasLine.height / 2);
+      ctxLine.strokeStyle = '#474747';
+      ctxLine.stroke();
     }
 
-    drawCanvas();
+    function drawBall() {
+      ctxBall.beginPath();
+      ctxBall.arc(x, y, radius, 0, Math.PI * 2);
+      ctxBall.fillStyle = 'blue';
+      ctxBall.fill();
+      ctxBall.closePath();
+    }
+
+    drawLine();
+    drawBall();
 
     function updateCanvas() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      drawCanvas();
+      ctxBall.clearRect(0, 0, canvasBall.width, canvasBall.height);
+      drawBall();
 
       x += speed * direction;
 
-      if (x + radius > canvas.width || x - radius < 0) {
+      if (x + radius > canvasBall.width || x - radius < 0) {
         direction *= -1;
       }
-    }
 
-    function animate() {
-      console.log('animate', isPlaying);
+      // requestAnimationFrame(updateCanvas);
       if (isPlaying) {
-        updateCanvas();
-        requestAnimationFrame(animate);
+        animationId = requestAnimationFrame(updateCanvas);
       }
     }
 
-    console.log('now', isPlaying);
+    // animationId = requestAnimationFrame(updateCanvas);
 
     if (isPlaying) {
-      animate();
+      updateCanvas();
     } else {
-      x = 20;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      requestAnimationFrame(drawCanvas);
+      // x = 20;
+      // ctxBall.clearRect(0, 0, canvasBall.width, canvasBall.height);
+      // requestAnimationFrame(drawBall);
+      cancelAnimationFrame(animationId);
     }
   }, [isPlaying]);
 
-  return <canvas id="myCanvas" width="400" height="80" />;
+  return (
+    <>
+      <div className="canvas__container">
+        <canvas
+          id="canvasBall"
+          width="400"
+          height="80"
+          className="canvas__ball"
+        ></canvas>
+        <canvas
+          id="canvasLine"
+          width="400"
+          height="80"
+          className="canvas__line"
+        />
+      </div>
+    </>
+  );
 }
