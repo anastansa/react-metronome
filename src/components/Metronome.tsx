@@ -27,7 +27,7 @@ export default function Metronome({ isPlaying, config }: Props) {
 
   usePlayClickSound(
     activeBeat,
-    activeBeat !== null ? beats[activeBeat] : null,
+    activeBeat !== null ? beats[activeBeat % config.beatCount] : null,
     isPlaying
   );
 
@@ -64,7 +64,7 @@ export default function Metronome({ isPlaying, config }: Props) {
           key={index}
           beatLevel={beat}
           onBeatLevelChanged={(level: number) => beatLevelChanged(index, level)}
-          active={activeBeat == index}
+          active={((activeBeat??0) % config.beatCount) == index}
         />
       ))}
     </div>

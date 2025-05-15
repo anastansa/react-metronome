@@ -3,9 +3,13 @@ import './Ball.css';
 
 interface Props {
   isPlaying: boolean;
+  tempo: number;
+  animationId: number|null;
+  handleAnimationId: (id:number) => void;
+  beatsCount: number;
 }
 
-export default function PlayStopButton({ isPlaying }: Props) {
+export default function PlayStopButton({ isPlaying, animationId, handleAnimationId, tempo, beatsCount }: Props) {
   useEffect(() => {
     const canvasBall = document.getElementById(
       'canvasBall'
@@ -17,13 +21,17 @@ export default function PlayStopButton({ isPlaying }: Props) {
     ) as HTMLCanvasElement;
     const ctxLine = canvasLine.getContext('2d') as CanvasRenderingContext2D;
 
-    let x = 20;
     const y = canvasBall.height / 2;
     const radius = 20;
-    const speed = 2;
+    let x = radius;
+    // const tempo = 100;
     let direction = 1;
-    let animationId;
+    let timePrev = 0;
 
+    if (animationId){
+      cancelAnimationFrame(animationId);
+    }
+      
     function drawLine() {
       ctxLine.beginPath();
       ctxLine.moveTo(0, canvasLine.height / 2);
@@ -40,36 +48,55 @@ export default function PlayStopButton({ isPlaying }: Props) {
       ctxBall.closePath();
     }
 
-    drawLine();
-    drawBall();
+    function initBall() {
+      ctxBall.clearRect(0, 0, canvasBall.width, canvasBall.height);   
+      x = radius;
+      drawBall();
+    }
 
-    function updateCanvas() {
+    drawLine();
+    initBall();
+
+    function updateCanvas(timeCurrent: number) {
       ctxBall.clearRect(0, 0, canvasBall.width, canvasBall.height);
       drawBall();
-
-      x += speed * direction;
-
-      if (x + radius > canvasBall.width || x - radius < 0) {
+      const tps = tempo/60;
+      const speed = (400-2*radius)*tps;
+      
+      if (timePrev) {
+        x += speed*(timeCurrent - timePrev) / 1000 * direction;
+      }
+      
+      if (x + radius >= canvasBall.width || x - radius <= 0) {
         direction *= -1;
+        
+        if (x + radius >= canvasBall.width) {
+          x = canvasBall.width - radius;
+        } else {
+          x = radius;
+        }
       }
 
-      // requestAnimationFrame(updateCanvas);
+      timePrev = timeCurrent;    
+
       if (isPlaying) {
-        animationId = requestAnimationFrame(updateCanvas);
+        if (animationId){
+          cancelAnimationFrame(animationId);
+        }
+        handleAnimationId(requestAnimationFrame(updateCanvas));
       }
     }
-
-    // animationId = requestAnimationFrame(updateCanvas);
 
     if (isPlaying) {
-      updateCanvas();
+      handleAnimationId(requestAnimationFrame(updateCanvas));
     } else {
-      // x = 20;
-      // ctxBall.clearRect(0, 0, canvasBall.width, canvasBall.height);
-      // requestAnimationFrame(drawBall);
-      cancelAnimationFrame(animationId);
+      initBall();
+      
+      if (animationId) {     
+        cancelAnimationFrame(animationId);
+      }
     }
-  }, [isPlaying]);
+  }, [isPlaying, tempo, beatsCount]);
 
   return (
     <>

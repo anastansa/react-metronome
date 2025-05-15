@@ -9,6 +9,7 @@ import './App.css';
 
 export default function Home() {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [animationId, setAnimationId] = useState(0);
 
   const [config, dispatch] = useReducer(reducer, {
     beatCount: 4,
@@ -19,11 +20,16 @@ export default function Home() {
     setIsPlaying(!isPlaying);
   }, [isPlaying]);
 
+  const handleAnimationId = useCallback( (animationIdLocal: number) => {
+    setAnimationId(animationIdLocal);
+    
+  }, [animationId]);
+
   return (
     <>
       <div className="container">
         <Metronome isPlaying={isPlaying} config={config} />
-        <Ball isPlaying={isPlaying} />
+        <Ball isPlaying={isPlaying} animationId={animationId} handleAnimationId={handleAnimationId} tempo={config.tempo} beatsCount={config.beatCount}/>
         <PlayStopButton isPlaying={isPlaying} handlePlaying={handlePlaying} />
         <Tempo
           tempo={config.tempo}

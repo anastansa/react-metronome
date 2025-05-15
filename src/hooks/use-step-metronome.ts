@@ -13,7 +13,7 @@ export default function useStepMetronome(
         setActiveBeat((curr) => {
           if (curr == null) return 0;
 
-          return curr < beatCount - 1 ? curr + 1 : 0;
+          return curr + 1;
         });
 
       const period = Math.round((1000 * 60) / tempo);
