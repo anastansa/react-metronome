@@ -1,15 +1,19 @@
 import { useEffect } from 'react';
 import './Ball.css';
+import type { RootState } from '../store';
+import { useSelector, useDispatch } from 'react-redux';
+import { changeAnimationId } from '../animationSlice';
 
 interface Props {
   isPlaying: boolean;
   tempo: number;
-  animationId: number|null;
-  handleAnimationId: (id:number) => void;
   beatsCount: number;
 }
 
-export default function PlayStopButton({ isPlaying, animationId, handleAnimationId, tempo, beatsCount }: Props) {
+export default function Ball({ isPlaying, tempo, beatsCount }: Props) {
+  const animationId = useSelector((state: RootState) => state.animation.value);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const canvasBall = document.getElementById(
       'canvasBall'
@@ -24,14 +28,13 @@ export default function PlayStopButton({ isPlaying, animationId, handleAnimation
     const y = canvasBall.height / 2;
     const radius = 20;
     let x = radius;
-    // const tempo = 100;
     let direction = 1;
     let timePrev = 0;
 
-    if (animationId){
+    if (animationId) {
       cancelAnimationFrame(animationId);
     }
-      
+
     function drawLine() {
       ctxLine.beginPath();
       ctxLine.moveTo(0, canvasLine.height / 2);
@@ -49,7 +52,7 @@ export default function PlayStopButton({ isPlaying, animationId, handleAnimation
     }
 
     function initBall() {
-      ctxBall.clearRect(0, 0, canvasBall.width, canvasBall.height);   
+      ctxBall.clearRect(0, 0, canvasBall.width, canvasBall.height);
       x = radius;
       drawBall();
     }
@@ -60,16 +63,16 @@ export default function PlayStopButton({ isPlaying, animationId, handleAnimation
     function updateCanvas(timeCurrent: number) {
       ctxBall.clearRect(0, 0, canvasBall.width, canvasBall.height);
       drawBall();
-      const tps = tempo/60;
-      const speed = (400-2*radius)*tps;
-      
+      const tps = tempo / 60;
+      const speed = (400 - 2 * radius) * tps;
+
       if (timePrev) {
-        x += speed*(timeCurrent - timePrev) / 1000 * direction;
+        x += ((speed * (timeCurrent - timePrev)) / 1000) * direction;
       }
-      
+
       if (x + radius >= canvasBall.width || x - radius <= 0) {
         direction *= -1;
-        
+
         if (x + radius >= canvasBall.width) {
           x = canvasBall.width - radius;
         } else {
@@ -77,22 +80,22 @@ export default function PlayStopButton({ isPlaying, animationId, handleAnimation
         }
       }
 
-      timePrev = timeCurrent;    
+      timePrev = timeCurrent;
 
       if (isPlaying) {
-        if (animationId){
+        if (animationId) {
           cancelAnimationFrame(animationId);
         }
-        handleAnimationId(requestAnimationFrame(updateCanvas));
+        dispatch(changeAnimationId(requestAnimationFrame(updateCanvas)));
       }
     }
 
     if (isPlaying) {
-      handleAnimationId(requestAnimationFrame(updateCanvas));
+      dispatch(changeAnimationId(requestAnimationFrame(updateCanvas)));
     } else {
       initBall();
-      
-      if (animationId) {     
+
+      if (animationId) {
         cancelAnimationFrame(animationId);
       }
     }
