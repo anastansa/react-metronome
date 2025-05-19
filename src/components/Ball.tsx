@@ -46,7 +46,7 @@ export default function Ball({ isPlaying, tempo, beatsCount }: Props) {
     function drawBall() {
       ctxBall.beginPath();
       ctxBall.arc(x, y, radius, 0, Math.PI * 2);
-      ctxBall.fillStyle = 'blue';
+      ctxBall.fillStyle = '#71aee1';
       ctxBall.fill();
       ctxBall.closePath();
     }

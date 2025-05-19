@@ -15,13 +15,18 @@
   background-color: transparent;
 }
 
-.active-beat-container {
-  border-color: blue;
+.active-beat-container .beat {
+  border-color: orange;
+}
+
+.active-beat-container .strong-beat {
+  box-shadow: 0 0 0 3px white, 0 0 0 6px orange;
 }
 
 .metronome {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 10px;
   margin-bottom: 20px;
 }
@@ -32,18 +37,18 @@
 }
 
 .normal-beat {
-  background-color: blue;
-  opacity: 0.3;
+  border: 8px double purple;
 }
 
 .weak-beat {
-  background-color: transparent;
-  border: 3px solid blue;
+  width: 25px !important;
+  height: 25px !important;
+  border: 3px solid purple;
 }
 
 .strong-beat {
-  background-color: blue;
-  opacity: 1;
+  border: 10px double purple;
+  box-shadow: 0 0 0 3px white, 0 0 0 6px purple;
 }
 
 .beat {
